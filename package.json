@@ -1,0 +1,17 @@
+{
+  "name": "glowloop",
+  "version": "1.0.0",
+  "description": "Glowloop: a firefly lasso arcade game for YouTube Playables",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node tools/serve.mjs src 8080",
+    "test": "node --test tests/*.test.mjs",
+    "build": "node tools/build.mjs",
+    "preview": "node tools/serve.mjs dist/playables 8081",
+    "thumbnails": "node tools/thumbnails.mjs 8095"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Glowloop · Playables SDK mock</title>
+    <!-- Fake ytgame that records every SDK call, so the lifecycle can be checked locally. -->
+    <script>
+      (function () {
+        const calls = [];
+        const pause = [];
+        const resume = [];
+        const audio = [];
+        let stored = JSON.stringify({ best: 4321, tutorialDone: true, futureField: 'ignored' });
+        let audioOn = true;
+        const log = (name, arg) => calls.push(arg === undefined ? name : `${name}:${arg}`);
+        window.__GLOWLOOP_DEBUG__ = true;
+        window.ytgame = {
+          IN_PLAYABLES_ENV: true,
+          SDK_VERSION: 'mock',
+          game: {
+            firstFrameReady: () => log('firstFrameReady'),
+            gameReady: () => log('gameReady'),
+            loadData: () => (log('loadData'), new Promise((r) => setTimeout(() => r(stored), 150))),
+            saveData: (d) => (log('saveData', d), (stored = d), Promise.resolve()),
+          },
+          engagement: { sendScore: (s) => (log('sendScore', s.value), Promise.resolve()) },
+          system: {
+            isAudioEnabled: () => audioOn,
+            onAudioEnabledChange: (cb) => (audio.push(cb), () => {}),
+            onPause: (cb) => (pause.push(cb), () => {}),
+            onResume: (cb) => (resume.push(cb), () => {}),
+            getLanguage: () => (log('getLanguage'), Promise.resolve('es-419')),
+          },
+          health: { logError: () => log('logError'), logWarning: () => log('logWarning') },
+        };
+        window.__mock = {
+          calls,
+          pause: () => pause.forEach((f) => f()),
+          resume: () => resume.forEach((f) => f()),
+          setAudio: (on) => ((audioOn = on), audio.forEach((f) => f(on))),
+          stored: () => stored,
+        };
+      })();
+    </script>
+    <link rel="stylesheet" href="../../src/css/style.css" />
+  </head>
+  <body>
+    <canvas id="game"></canvas>
+    <script type="module" src="../../src/js/main.js"></script>
+  </body>
+</html>
