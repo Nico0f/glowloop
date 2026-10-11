@@ -204,14 +204,23 @@ window.__glowloopWebStore = {
 );
 await writeFile(
   join(WEB, 'index.html'),
-  `<title>Glowloop</title>
-<meta name="description" content="Draw glowing loops around fireflies to catch them. Same color scores more; keep moths out.">
-<style>
+  `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>Glowloop</title>
+    <meta name="description" content="Draw glowing loops around fireflies to catch them. Same color scores more; keep moths out.">
+    <style>
 ${css.trim()}
-</style>
-<canvas id="game" aria-label="Glowloop: draw loops around fireflies to catch them"></canvas>
-<script src="js/web-store.js"></script>
-<script type="module" src="js/main.js"></script>
+    </style>
+  </head>
+  <body>
+    <canvas id="game" aria-label="Glowloop: draw loops around fireflies to catch them"></canvas>
+    <script src="js/web-store.js"></script>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
 `,
 );
 

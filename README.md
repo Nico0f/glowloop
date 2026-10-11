@@ -2,6 +2,8 @@
 
 A firefly-lasso arcade game built for **YouTube Playables**.
 
+Play it in the browser: https://nico0f.github.io/glowloop/
+
 Draw a glowing line with your finger or mouse. When it closes into a loop, every
 firefly inside is caught. Fireflies in the same color score the square of their
 count, so 5 golds in one loop score 250 while a 3 + 2 mix scores 130. Chaining
@@ -50,6 +52,7 @@ Creates:
 - `dist/glowloop-playables.zip`: the file you upload to YouTube (about 30 KiB).
 - `dist/playables/`: the same files unzipped.
 - `dist/web/`: a preview build without the SDK that keeps your best score in the browser.
+  Every push to `main` deploys it to GitHub Pages (`.github/workflows/pages.yml`).
 
 The build fails if the bundle breaks a certification rule it can check: banned
 APIs (browser storage, cookies, `navigator.language`, Page Visibility, `eval`,
